@@ -15,9 +15,10 @@ export default createStore({
     }
   },
   actions: {
-    getCoins({ commit }) {
+    getCoins({ commit }, { pageNumber = 0, perPageRow = 10 }) {
+      const offset = perPageRow * pageNumber;
       axios
-        .get("https://api.coinranking.com/v1/public/coins/?limit=10")
+        .get(`https://api.coinranking.com/v1/public/coins/?limit=${perPageRow}&offset=${offset}`)
         .then(result => commit("getCoins", result.data))
         .catch(console.error);
     }
